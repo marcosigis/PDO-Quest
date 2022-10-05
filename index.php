@@ -15,26 +15,34 @@ $friends = $statement->fetchAll();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>QUEST PDO</title>
 </head>
 <body>
+<?php include 'include/header.html' ?>
 
 <form class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-            <div>
+        <div class="container-fluid">
+            <div class="form-group">
                 <label for="firstname"></label><br>
-                <input id="firstname" type="text" name="firstname" placeholder="First name"/>
+                <input id="firstname" type="text" name="firstname" placeholder="First name" required/>
             
             </div>
-            <div>
+            <div class="form-group">
                 <label for="lastname"></label><br>
-                <input id="lastname" type="text" name="lastname" placeholder="Last name" />
+                <input id="lastname" type="text" name="lastname" placeholder="Last name" required />
             </div>
 
-            <div >
+            <div>
                 <button type="submit">Add friend!</button>
             </div>
+        </div>
 </form>
-
+<?php 
+if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+    echo '<br><div class="alert alert-success" role="alert">Bravo! You made a new friend, <a href="/index.php" class="alert-link">click</a> to refresh and see them.</div><br>';
+ }
+ ?>
 
     <?php foreach($friends as $friend) : ?>
             <ul>
@@ -60,16 +68,16 @@ $lastname = clean_input($_POST['lastname']);
 
 if ((empty($firstname)) || ($firstname === '')) {
     $errors[] = "First name is required";
-    } elseif(strlen($firstname) > 100){
-      $errors[] = "The first name must be max 100 characters";
+    } elseif(strlen($firstname) > 45){
+      $errors[] = "The first name must be max 45 characters";
     } elseif(strlen($firstname) < 2){
       $errors[] = "The first name must be longer than 1 character.";
     } 
 
     if ((empty($lastname)) || ($lastname === '')) {
         $errors[] = "Last name is required";
-        } elseif(strlen($lastname) > 100){
-          $errors[] = "The last name must be max 100 characters";
+        } elseif(strlen($lastname) > 45){
+          $errors[] = "The last name must be max 45 characters";
         } elseif(strlen($lastname) < 2){
           $errors[] = "The last name must be longer than 1 character.";
         }
